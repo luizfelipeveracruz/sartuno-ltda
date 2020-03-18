@@ -1,0 +1,44 @@
+enable
+conf t
+hostname RT-01
+enable secret Sarturno*enable
+no ip domain-lookup
+line console 0
+password Sarturno*console
+login
+exit
+banner motd "ATENCAO! APENAS O DEPARTAMENTO DE TI DA EMPRESA SARTUNO LTDA. TEM A AUTORIZACAO PARA ACESSAR ESSE EQUIPAMENTO!"
+ip domain-name sarturno.local
+crypto key generate rsa general-key modulus 1024
+line vty 0 15
+transport input ssh
+password Sarturno*VTY
+login 
+exit
+interface g0/0
+ip address 172.16.15.1 255.255.255.0
+no shutdown
+end 
+wr
+conf t
+interface g0/1
+ip address 192.168.0.1 255.255.0.0
+no shutdown
+end
+wr
+conf t
+interface g0/2
+ip address 172.16.10.1 255.255.255.0
+no shutdown
+end
+wr
+conf t 
+username sarturnoti privilege 15 secret batata*00
+line console 0
+login local
+end
+conf t
+line vty 0 15 
+login local
+exit 
+wr
